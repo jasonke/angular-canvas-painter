@@ -137,14 +137,16 @@ angular.module('pw.canvas-painter')
         };*/
 
 
+        var rec;
         var setPointFromEvent = function(point, e) {
           if(isTouch){
             if(iOS){
               point.x = e.layerX;
               point.y = e.layerY;
             } else {
-              point.x = e.changedTouches[0].clientX - e.target.offsetParent.offsetLeft;
-              point.y = e.changedTouches[0].clientY - e.target.offsetParent.offsetTop;
+              rec = e.target.offsetParent.getBoundingClientRect();
+              point.x = e.changedTouches[0].clientX - rec.left;
+              point.y = e.changedTouches[0].clientY - rec.top;
             }
           } else {
             point.x = e.offsetX !== undefined ? e.offsetX : e.layerX;
